@@ -12,11 +12,9 @@ import java.util.Observer;
  */
 public class TemperatureObserver implements Observer {
 
-    private Observable observable;
-
     public TemperatureObserver(Observable observable) {
-        this.observable = observable;
-        observable.addObserver(this); // 订阅主题
+        // 订阅主题
+        observable.addObserver(this);
     }
 
     @Override

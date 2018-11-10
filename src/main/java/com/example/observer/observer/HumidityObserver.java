@@ -12,11 +12,9 @@ import java.util.Observer;
  */
 public class HumidityObserver implements Observer {
 
-    private Observable observable;
-
     public HumidityObserver(Observable observable) {
-        this.observable = observable;
-        observable.addObserver(this);// 订阅主题
+        // 订阅主题
+        observable.addObserver(this);
     }
 
     @Override

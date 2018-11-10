@@ -4,7 +4,6 @@ import com.example.strategy.behavior.fly.FlyBehavior;
 import com.example.strategy.behavior.fly.impl.FlyWithWings;
 import com.example.strategy.behavior.quack.Quackbehavior;
 import com.example.strategy.behavior.quack.impl.Quack;
-import com.example.strategy.behavior.quack.impl.Squeak;
 
 /**
  * @Description:

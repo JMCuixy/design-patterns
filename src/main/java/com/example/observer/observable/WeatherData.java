@@ -3,6 +3,8 @@ package com.example.observer.observable;
 import com.example.observer.observer.HumidityObserver;
 import com.example.observer.observer.PressureObserver;
 import com.example.observer.observer.TemperatureObserver;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Observable;
 
@@ -11,6 +13,8 @@ import java.util.Observable;
  * @author: cuixiuyin
  * @date: 2018/11/08 09:48
  */
+@AllArgsConstructor
+@Getter
 public class WeatherData extends Observable {
     /**
      * 温度
@@ -25,15 +29,6 @@ public class WeatherData extends Observable {
      */
     private Float pressure;
 
-    public WeatherData() {
-
-    }
-
-    public WeatherData(Float temperature, Float humidity, Float pressure) {
-        this.temperature = temperature;
-        this.humidity = humidity;
-        this.pressure = pressure;
-    }
 
     /**
      * 假设改变的时候这个方法会被调用
@@ -41,20 +36,7 @@ public class WeatherData extends Observable {
     public void measurementsChanged() {
         setChanged();
         notifyObservers(); // 这种不带参数的方式，由观察者 pull 自己想要的数据。要什么数据由观察者自己决定。
-        //notifyObservers(Object arg) // 这种带参数的方式，由主题 push 数据。传什么数据由主题决定。
-    }
-
-
-    public Float getTemperature() {
-        return temperature;
-    }
-
-    public Float getHumidity() {
-        return humidity;
-    }
-
-    public Float getPressure() {
-        return pressure;
+        //notifyObservers(Object arg) // 这种带参数的方式，由主题 push 数据。传什么数据由主题决定。(推荐)
     }
 
     public static void main(String[] args) {

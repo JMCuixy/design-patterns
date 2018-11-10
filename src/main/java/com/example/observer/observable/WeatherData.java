@@ -40,12 +40,13 @@ public class WeatherData extends Observable {
     }
 
     public static void main(String[] args) {
-        // 新建主题
+        // 具体主题实现
         WeatherData weatherData = new WeatherData(24.0F,152F,100F);
-        // 新建观察者
+        // 观察者订阅
         new HumidityObserver(weatherData);
         new PressureObserver(weatherData);
         new TemperatureObserver(weatherData);
+        // 事件发生
         weatherData.measurementsChanged();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.decorator;
 
+import java.io.*;
+
 /**
  * @Description:
  * @author: cuixiuyin
@@ -7,7 +9,7 @@ package com.example.decorator;
  */
 public class Test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Beverage beverage = new Espresso();
         System.out.println("浓缩咖啡：" + beverage.getDescription() + "," + beverage.cost());
 
@@ -21,5 +23,14 @@ public class Test {
         beverage2 = new Mocha(beverage2);
         beverage2 = new BigCup(beverage2);
         System.out.println("混合饮料+摩卡+大杯：" + beverage2.getDescription() + "," + beverage2.cost());
+
+        /*---------*/
+
+        InputStream in = new LowerCaseInputStream(new BufferedInputStream(new FileInputStream("E:\\world.txt")));
+        int c;
+        while ((c = in.read()) > 0) {
+            System.out.print((char) c);
+        }
+
     }
 }

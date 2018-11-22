@@ -14,7 +14,7 @@ public class PizzaStore {
     }
 
     public void prepare() {
-        Pizza cheese = this.abstractFactory.createCheese();
-        Pizza durian = this.abstractFactory.createDurian();
+        this.abstractFactory.createCheese();
+        this.abstractFactory.createDurian();
     }
 }

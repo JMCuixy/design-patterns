@@ -15,5 +15,4 @@ public class Test {
         PizzaStore pizzaStore2 = new PizzaStore(abstractFactory2);
         pizzaStore2.prepare();
     }
-
 }

@@ -1,6 +1,4 @@
-package com.example.factory_method;
-
-import org.springframework.beans.factory.wiring.BeanWiringInfo;
+package com.example.factory.method;
 
 /**
  * @Description:

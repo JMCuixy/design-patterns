@@ -1,4 +1,4 @@
-package com.example.factory_method;
+package com.example.factory.method;
 
 /**
  * @Description:

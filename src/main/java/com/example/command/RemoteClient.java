@@ -21,6 +21,4 @@ public class RemoteClient {
         invoker.offButton(0);
         invoker.undoButton();
     }
-
-
 }

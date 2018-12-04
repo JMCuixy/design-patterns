@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Day1 {
 
     public static void main(String[] args) {
-        // 计算两个数的操作结果
+        // 接受两个参数，返回两个数的操作结果
         BinaryOperator<Long> add = (x, y) -> x + y;
         Long apply = add.apply(4L, 5L);
         System.out.println(apply);

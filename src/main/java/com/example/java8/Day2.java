@@ -75,9 +75,6 @@ public class Day2 {
         BinaryOperator<Integer> operator = (acc, e) -> acc + e;
         Integer apply = operator.apply(operator.apply(operator.apply(0, 1), 2), 3);
         System.out.println(apply);
-
-
-
     }
 
 }

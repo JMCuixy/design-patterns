@@ -66,6 +66,7 @@ public class Day2 {
         String minStr = list.stream().min(Comparator.comparing(e -> e.length())).get();
         System.out.println(minStr);
 
+
         //7、reduce - 从一组值中生成一个值 - count、min、max 这些方法都是 reduce 操作。
         // Lambda 表达式就是 reducer， 它执行求和操作， 有两个参数： 传入 Stream 中的当前元素和 acc。 将两个参数相加， acc 是累加器， 保存着当前的累加结果
         Integer sum1 = Stream.of(1, 2, 3).reduce(0, (acc, e) -> acc + e);
@@ -75,6 +76,9 @@ public class Day2 {
         BinaryOperator<Integer> operator = (acc, e) -> acc + e;
         Integer apply = operator.apply(operator.apply(operator.apply(0, 1), 2), 3);
         System.out.println(apply);
+
+
+
     }
 
 }

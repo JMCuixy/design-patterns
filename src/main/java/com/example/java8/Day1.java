@@ -2,6 +2,7 @@ package com.example.java8;
 
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BinaryOperator;
@@ -23,6 +24,7 @@ public class Day1 {
         List<String> list = Arrays.asList("java", "python", "c++");
         Map<String, String> collect = list.stream().collect(Collectors.toMap(String::new, String::new, (o1, o2) -> o2));
         collect.forEach((k, v) -> System.out.println(k + "," + v));
+
     }
 
 

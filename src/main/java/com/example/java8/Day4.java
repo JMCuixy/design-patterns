@@ -1,10 +1,7 @@
 package com.example.java8;
 
-import javax.sound.midi.Soundbank;
 import java.util.*;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,7 +54,7 @@ public class Day4 {
         String joinStr = collect.stream().map(String::new).collect(Collectors.joining(",", "[", "]"));
         System.out.println(joinStr);
 
-        // 8、组合收集器 - 先将集合分组，然后统计分组的值
+        // 8、组合收集器 - 先将集合分组，然后统计分组的值 - 比如计算每个城市的姓氏集合-> 先按城市分组，再计算姓氏的集合。
         Map<Integer, Long> longMap = collect.stream().collect(Collectors.groupingBy(String::length, Collectors.counting()));
         longMap.forEach((k, v) -> {
             System.out.println(k + ":" + v);
@@ -67,6 +64,15 @@ public class Day4 {
         longMap2.forEach((k, v) -> {
             System.out.println(k + ":" + v);
         });
+
+        // 9 computeIfAbsent
+        Map<String, String> map = new HashMap<>(4);
+        map.put("java", "java");
+        map.put("php", "php");
+        map.forEach((k, v) -> System.out.println(k + "," + v));
+        map.computeIfAbsent("python", k -> k.toUpperCase());
+        map.forEach((k, v) -> System.out.println(k + "," + v));
+
     }
 
 }

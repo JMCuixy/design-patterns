@@ -73,6 +73,17 @@ public class Day4 {
         map.computeIfAbsent("python", k -> k.toUpperCase());
         map.forEach((k, v) -> System.out.println(k + "," + v));
 
+        // 10 数组上的并行化操作
+        // parallelPrefix 任意给定一个函数， 计算数组的和
+        // parallelSetAll 使用 Lambda 表达式更新数组元素
+        // parallelSort 并行化对数组元素排序
+        double[] values = new double[10];
+        Arrays.parallelSetAll(values, i -> i);
+        for (double v : values) {
+            System.out.print(v);
+        }
+        System.out.println();
+
     }
 
 }

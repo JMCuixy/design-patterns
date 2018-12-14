@@ -1,5 +1,7 @@
 package com.example.java8;
 
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -23,9 +25,12 @@ public class Day5 {
                 .collect(Collectors.toList());
 
 
-        Stream.of("java", "python", "php").peek(e -> {
-
-        });
+        Stream.of("java", "python", "php").forEach(e -> System.out.println(e));
+        Stream.of("java", "python", "php").forEachOrdered(e -> System.out.println(e));
+        System.out.println("--------------------------------------------------------");
+        Stream.of("java", "python", "php", "java").distinct().forEach(e -> System.out.println(e));
+        Optional<String> first = Stream.of("java", "python", "php").findFirst();
+        Optional<String> any = Stream.of("java", "python", "php").findAny();
     }
 
 

@@ -55,9 +55,9 @@ Stream 的操作有两种，一种是描述 Stream ，如 filter、map、peek �
 
 收集器：一种通用的、从流生成复杂值的结构。只要将它传给 collect 方法， 所有的流就都可以使用它了。在 java.util.stream.Collectors 中提供了一些有用的收集器。比如 toList、toSet、toMap 等。
 
-在一个有序集合中创建一个流时，流中的元素就按出现顺序排列；如果集合本身就是无序的，由此生成的流也是无序的。需要注意的是，forEach 方法不能保证元素是按顺序处理的。当然，我们可以使用 sorted 方法对Stream 中的元素进行自定义排序。
+在一个有序集合中创建一个流时，流中的元素就按出现顺序排列；如果集合本身就是无序的，由此生成的流也是无序的。需要注意的是，forEach 方法不能保证元素是按顺序处理的，如果需要保证按顺序处理，应该使用forEachOrdered 方法。当然，我们可以使用 sorted 方法对Stream 中的元素进行自定义排序。
 
-- **foreach - 迭代集合**    
+- **foreach/forEachOrdered - 迭代集合**    
 ```
 list.forEach(e -> System.out.println(e));
 
@@ -70,6 +70,14 @@ map.forEach((k, v) -> {
 - **对 Stream 进行自定义排序**    
 ```
 List<String> collectSort = collect.stream().sorted(Comparator.comparing(String::length)).collect(Collectors.toList());
+```
+
+- **allMatch、anyMatch、noneMatch - 检查元素是否匹配**    
+```
+private boolean isPrime(int number) {
+    return IntStream.range(2, number)
+            .allMatch(x -> (number % x) != 0);
+}
 ```
 
 - **collect(toList()) - 由Stream里的值生成一个 List/Set/自定义 集合**    
@@ -131,14 +139,31 @@ Map<Integer, List<Integer>> listMap = collect.stream().collect(Collectors.groupi
 
 ### 2、惰性求值
 
-- **range - 遍历并检查过滤其中的元素。**  
+- **range - 以步长为1的循环**  
+```
+private boolean isPrime(int number) {
+    return IntStream.range(2, number)
+            .allMatch(x -> (number % x) != 0);
+}
+等价于：
+for (int i = 2; i < number ; i++) { ... }
+```
+
+- **filter - 遍历并检查过滤其中的元素**  
 ```
 long count = list.stream().filter(x -> "java".equals(x)).count();
 ```
 
-- **filter - 遍历并检查过滤其中的元素。**  
+- **distinct - 对流中的元素去重**      
+流中的元素去重根据的是对象的 equal() 方法，对于有序列的流，相同的元素以第一个为准；对于无序列的流，去重的稳定性不做保证。
 ```
-long count = list.stream().filter(x -> "java".equals(x)).count();
+Stream.of("java", "python", "php", "java").distinct().forEach(e -> System.out.println(e));
+```
+
+- **findAny、findFirst - 返回一个流中的元素**  
+```
+Optional<String> first = Stream.of("java", "python", "php").findFirst();
+Optional<String> any = Stream.of("java", "python", "php").findAny();
 ```
 
 - **map、mapToInt、mapToLong、mapToDouble - 将流中的值转换成一个新的值**  
@@ -181,6 +206,25 @@ String minStr = list.stream().min(Comparator.comparing(e -> e.length())).get();
 ```
 上述执行求和操作，有两个参数： 传入 Stream 中初始值和 acc。 将两个参数相加，acc 是累加器，保存着当前的累加结果。
 
+### 3、Stream 的并行操作
+在 Java8 中，编写并行化的程序很容易。并行化操作流只需改变一个方法调用。如果已经有一个Stream对象，调用它的 parallel 方法就能让其拥有并行操作的能力。如果想从一个集合类创建一个流，调用 parallelStream 就能立即获得一个拥有并行能力的流。在底层，并行流还是沿用了 fork/join 框架。fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值。
+ ```
+ List<String> paraList = Stream.of("java", "php", "python").parallel().collect(Collectors.toList());
+ List<String> resultList = paraList.parallelStream().collect(Collectors.toList());
+ ```
+需要注意的是：在要对流求值时，不能同时处于两种模式，要么是并行的，要么是串行的。如果同时调用了 parallel 和 sequential 方法，最后调用的那个方法起效。
+ 
+并行化流操作的用武之地是使用操作处理大量数据。在处理少量数据时，效果并不明显，因为要把时间花销在数据的分块上。 
+
+影响并行流性能的五要素是：数据大小、源数据结构、值是否装箱、可用的 CPU 核数量以及处理每个元素所花的时间。   
+
+|性能|例子|描述|
+|:---:|:---:|:---:|
+|好|ArrayList、数组或IntStream.range|这些数据结构支持随机读取，也就是说它们能轻而易举地被任意分解。|
+|一般|HashSet、TreeSet|这些数据结构不易公平地被分解，但是大多数时候分解是可能的。|
+|差|LinkedList、Streams.iterate和BufferedReader.lines|数据结构难以分解或是长度未知，很难预测该在哪里分解。|
+
+在讨论流中单独操作每一块的种类时，可以分成两种不同的操作：无状态的和有状态的。无状态操作整个过程中不必维护状态，有状态操作则有维护状态所需的开销和限制。如果能避开有状态，选用无状态操作，就能获得更好的并行性能。无状态操作包括 map、filter 和 flatMap，有状态操作包括 sorted、distinct 和 limit。
 
 ## 四、默认方法   
 java8 中新增了 Stream 操作，那么第三方类库中的自定义集合 MyList 要怎么做到兼容呢？总不能升级完 java8，第三方类库中的集合实现全都不能用了吧？  
@@ -223,14 +267,14 @@ public interface Iterable<T> {
 - 如果上面两条规则不适用， 子类要么需要实现该方法， 要么将该方法声明为抽象方法。  
 
 
-## 四、其他
+## 五、其他
 
 - 使用 Lambda 表达式，就是将复杂性抽象到类库的过程。
 - 面向对象编程是对数据进行抽象， 而函数式编程是对行为进行抽象。  
 - Java8 虽然在匿名内部类中可以引用非 final 变量， 但是该变量在既成事实上必须是final。即如果你试图给该变量多次赋值， 然后在 Lambda 表达式中引用它， 编译器就会报错。   
 - Stream 是用函数式编程方式在集合类上进行复杂操作的工具。   
 - 对于需要大量数值运算的算法来说， 装箱和拆箱的计算开销， 以及装箱类型占用的额外内存， 会明显减缓程序的运行速度。为了减小这些性能开销， Stream 类的某些方法对基本类型和装箱类型做了区分。比如 IntStream、LongStream 等。  
-- Java8 对为 null 的字段也引进了自己的处理，既不用一直用 if 判断对象是否为 null，来看看?
+- Java8 对为 null 的字段也引进了自己的处理，既不用一直用 if 判断对象是否为 null。
 ```
 public static List<AssistantVO> getAssistant(Long tenantId) {
     // ofNullable 如果 value 为null，会构建一个空对象。

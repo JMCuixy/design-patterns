@@ -207,11 +207,13 @@ String minStr = list.stream().min(Comparator.comparing(e -> e.length())).get();
 上述执行求和操作，有两个参数： 传入 Stream 中初始值和 acc。 将两个参数相加，acc 是累加器，保存着当前的累加结果。
 
 ### 3、Stream 的并行操作
-在 Java8 中，编写并行化的程序很容易。并行化操作流只需改变一个方法调用。如果已经有一个Stream对象，调用它的 parallel 方法就能让其拥有并行操作的能力。如果想从一个集合类创建一个流，调用 parallelStream 就能立即获得一个拥有并行能力的流。在底层，并行流还是沿用了 fork/join 框架。fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值。
+在 Java8 中，编写并行化的程序很容易。并行化操作流只需改变一个方法调用。如果已经有一个Stream对象，调用它的 parallel 方法就能让其拥有并行操作的能力。如果想从一个集合类创建一个流，调用 parallelStream 就能立即获得一个拥有并行能力的流。在底层，并行流还是沿用了 fork/join 框架。fork 递归式地分解问题，然后每段并行执行，最终由 join 合并结果，返回最后的值。  
+
  ```
  List<String> paraList = Stream.of("java", "php", "python").parallel().collect(Collectors.toList());
  List<String> resultList = paraList.parallelStream().collect(Collectors.toList());
  ```
+
 需要注意的是：在要对流求值时，不能同时处于两种模式，要么是并行的，要么是串行的。如果同时调用了 parallel 和 sequential 方法，最后调用的那个方法起效。
  
 并行化流操作的用武之地是使用操作处理大量数据。在处理少量数据时，效果并不明显，因为要把时间花销在数据的分块上。 

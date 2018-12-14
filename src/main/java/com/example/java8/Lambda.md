@@ -57,7 +57,7 @@ Stream 的操作有两种，一种是描述 Stream ，如 filter、map、peek �
 
 在一个有序集合中创建一个流时，流中的元素就按出现顺序排列；如果集合本身就是无序的，由此生成的流也是无序的。需要注意的是，forEach 方法不能保证元素是按顺序处理的，如果需要保证按顺序处理，应该使用forEachOrdered 方法。当然，我们可以使用 sorted 方法对Stream 中的元素进行自定义排序。
 
-- **foreach/forEachOrdered - 迭代集合**    
+#### foreach/forEachOrdered - 迭代集合    
 ```
 list.forEach(e -> System.out.println(e));
 
@@ -67,12 +67,12 @@ map.forEach((k, v) -> {
 });
 ```
 
-- **对 Stream 进行自定义排序**    
+#### 对 Stream 进行自定义排序    
 ```
 List<String> collectSort = collect.stream().sorted(Comparator.comparing(String::length)).collect(Collectors.toList());
 ```
 
-- **allMatch、anyMatch、noneMatch - 检查元素是否匹配**    
+#### allMatch、anyMatch、noneMatch - 检查元素是否匹配     
 ```
 private boolean isPrime(int number) {
     return IntStream.range(2, number)
@@ -80,7 +80,7 @@ private boolean isPrime(int number) {
 }
 ```
 
-- **collect(toList()) - 由Stream里的值生成一个 List/Set/自定义 集合**    
+#### collect(toList()) - 由Stream里的值生成一个 List/Set/自定义 集合      
 ```
 List<String> list = Stream.of("java", "C++", "Python").collect(Collectors.toList());
 等价于：
@@ -93,7 +93,7 @@ Set<String> set = Stream.of("java", "python", "php").collect(Collectors.toSet())
 TreeSet<String> treeSet = Stream.of("java", "python", "php").collect(Collectors.toCollection(() -> new TreeSet<>()));
 ```
 
-- **collect(toMap()) - 由Stream里的值生成一个 Map 集合**     
+#### collect(toMap()) - 由Stream里的值生成一个 Map 集合     
 
 使用 toMap() 需要注意的是：Map中的key不能重复，如果重复的话，会抛出异常，因为 JVM 弄不清楚我是用新的Value、还是要用旧的Value呢?所以代码写成了如下的样子~~  
 ```
@@ -104,7 +104,7 @@ Map<String, String> strMap = Stream.of("java", "python", "php").collect(Collecto
 Map<Object, Object> mapResult = Stream.of("java", "python", "php").collect(HashMap::new, (map, str) -> map.put(str, str), HashMap::putAll);
 ```
 
-- **collect(maxBy())、collect(minBy())、collect(averagingInt()) - 求值操作**
+#### collect(maxBy())、collect(minBy())、collect(averagingInt()) - 求值操作
 ```
 Optional<String> optionalMaxBy = Stream.of("java", "python", "php").collect(Collectors.maxBy(Comparator.comparing(str -> str.length())));
 System.out.println(optionalMaxBy.get());
@@ -116,13 +116,13 @@ Double aDouble = Stream.of("java", "python", "php").collect(Collectors.averaging
 System.out.println(aDouble);
 ```
 
-- **collect(Collectors.joining()) - 字符串拼接操作**
+#### collect(Collectors.joining()) - 字符串拼接操作
 ```
 String joinStr = Stream.of("java", "python", "php").collect(Collectors.joining(",", "[", "]"));
 ```
 joining() 的三个参数依次为 分隔符、前缀、后缀。
 
-- **collect(partitioningBy())、collect(groupingBy()) - 聚合统计操作**
+#### collect(partitioningBy())、collect(groupingBy()) - 聚合统计操作
 ```
 List<String> collect = Stream.of("java", "python", "php").collect(Collectors.toList());
 // 数据分堆，按照 Boolean 值，将数据分成两堆
@@ -139,7 +139,7 @@ Map<Integer, List<Integer>> listMap = collect.stream().collect(Collectors.groupi
 
 ### 2、惰性求值
 
-- **range - 以步长为1的循环**  
+#### range - 以步长为1的循环  
 ```
 private boolean isPrime(int number) {
     return IntStream.range(2, number)
@@ -149,24 +149,24 @@ private boolean isPrime(int number) {
 for (int i = 2; i < number ; i++) { ... }
 ```
 
-- **filter - 遍历并检查过滤其中的元素**  
+#### filter - 遍历并检查过滤其中的元素  
 ```
 long count = list.stream().filter(x -> "java".equals(x)).count();
 ```
 
-- **distinct - 对流中的元素去重**      
+#### distinct - 对流中的元素去重      
 流中的元素去重根据的是对象的 equal() 方法，对于有序列的流，相同的元素以第一个为准；对于无序列的流，去重的稳定性不做保证。
 ```
 Stream.of("java", "python", "php", "java").distinct().forEach(e -> System.out.println(e));
 ```
 
-- **findAny、findFirst - 返回一个流中的元素**  
+#### findAny、findFirst - 返回一个流中的元素  
 ```
 Optional<String> first = Stream.of("java", "python", "php").findFirst();
 Optional<String> any = Stream.of("java", "python", "php").findAny();
 ```
 
-- **map、mapToInt、mapToLong、mapToDouble - 将流中的值转换成一个新的值**  
+#### map、mapToInt、mapToLong、mapToDouble - 将流中的值转换成一个新的值  
 ```
 List<String> mapList = list.stream().map(str -> str.toUpperCase()).collect(Collectors.toList());
 
@@ -179,7 +179,7 @@ System.out.println("总数：" + intSummaryStatistics.getSum());
 ```
 mapToInt、mapToLong、mapToDouble 和 map 操作类似，只是把函数接口的返回值改为 int、long、double 而已。
 
-- **peek - 逐个处理流中的元素，无返回值**  
+#### peek - 逐个处理流中的元素，无返回值  
 ```
 Stream.of("one", "two", "three", "four")
         .filter(e -> e.length() > 3)
@@ -190,14 +190,14 @@ Stream.of("one", "two", "three", "four")
 ```
 peek 和 map 的区别在于：peek 接受的是 Consumer 高阶函数，无返回值；map 接受的是 Function 高阶函数，有返回值。
 
-- **flatMap - 将多个 Stream 连接成一个 Stream**
+#### flatMap - 将多个 Stream 连接成一个 Stream
 ```
 List<String> streamList = Stream.of(list, asList).flatMap(x -> x.stream()).collect(Collectors.toList());
 ```
 flatMap 方法的相关函数接口和 map 方法的一样， 都是 Function 接口， 只是方法的返回值限定为 Stream 类型罢了。
 
 
-- **reduce - 聚合操作，从一组元素中生成一个值，sum()、max()、min()、count() 等都是reduce操作，将他们单独设为函数只是因为常用**
+#### reduce - 聚合操作，从一组元素中生成一个值，sum()、max()、min()、count() 等都是reduce操作，将他们单独设为函数只是因为常用
 ```
 Integer sum1 = Stream.of(1, 2, 3).reduce(0, (acc, e) -> acc + e);
 
@@ -293,5 +293,6 @@ map.put("java", "java");
 map.put("php", "php");
 String python = map.computeIfAbsent("python", k -> k.toUpperCase());
 ```
-
-
+- 从某种角度来说，大量代码塞进一个方法会让可读性变差是决定如何使用 Lambda 表达式的黄金法则。  
+- 在过去十年中，人们批评单例模式让程序变得更脆弱，且难于测试。敏捷开发的流行，让测试显得更加重要，单例模式的这个问题把它变成了一个反模式：一种应该避免使用的模式。  
+- 软件开发最重要的设计工具不是什么技术，而是一颗在设计原则方面训练有素的头脑。  

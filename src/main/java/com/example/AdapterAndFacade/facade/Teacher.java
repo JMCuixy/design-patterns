@@ -2,8 +2,6 @@ package com.example.AdapterAndFacade.facade;
 
 import lombok.Data;
 
-import javax.naming.Name;
-import java.util.List;
 
 /**
  * @Description:

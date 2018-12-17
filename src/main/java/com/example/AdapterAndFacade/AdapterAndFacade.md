@@ -13,7 +13,7 @@
 ![avatar][base64str] 
 
 ### 2、Demo 实现  
-&emsp;&emsp;在 JDK1.0 时我们用的集合还是 Vector（后来推荐使用 ArrayList），我们用的迭代器还是 Enumeration（后来推荐使用 Iterator）。现在我们想写一个适配器，让 Vector 也能使用 Iterator 迭代器，即在 Enumeration 和 Iterator 之间做适配。  
+&emsp;在 JDK1.0 时我们用的集合还是 Vector（后来推荐使用 ArrayList），我们用的迭代器还是 Enumeration（后来推荐使用 Iterator）。现在我们想写一个适配器，让 Vector 也能使用 Iterator 迭代器，即在 Enumeration 和 Iterator 之间做适配。  
 ```
 /**
  * 1、Iterator 是目标（Target）接口角色。
@@ -51,9 +51,9 @@ public class EnumerationAdapter implements Iterator {
         vector.add("python");
         vector.add("javaScript");
         Enumeration enumeration = vector.elements();
-        EnumerationAdapter adapter = new EnumerationAdapter(enumeration);
-        while (adapter.hasNext()) {
-            System.out.println(adapter.next());
+        Iterator iterator = new EnumerationAdapter(enumeration);
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
     }
 ```

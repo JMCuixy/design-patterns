@@ -38,9 +38,9 @@ public class EnumerationAdapter implements Iterator {
         vector.add("python");
         vector.add("javaScript");
         Enumeration enumeration = vector.elements();
-        EnumerationAdapter adapter = new EnumerationAdapter(enumeration);
-        while (adapter.hasNext()) {
-            System.out.println(adapter.next());
+        Iterator iterator = new EnumerationAdapter(enumeration);
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
     }
 }

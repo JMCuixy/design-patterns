@@ -1,4 +1,4 @@
-package com.example.AdapterAndFacade.facade;
+package com.example.Adapter;
 
 import lombok.Data;
 

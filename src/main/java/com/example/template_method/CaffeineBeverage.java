@@ -8,7 +8,8 @@ package com.example.template_method;
 public abstract class CaffeineBeverage {
 
     /**
-     * @Description 1、模板方法，定义算法的步骤。
+     * @Description
+     * 1、模板方法，定义算法的步骤。
      * 2、我们一般把模板方法定义成 final，不希望子类覆盖。
      */
     public final void prepareRecipe() {

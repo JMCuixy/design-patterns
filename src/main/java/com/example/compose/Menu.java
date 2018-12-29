@@ -61,8 +61,7 @@ public class Menu extends MenuComponent {
      */
     @Override
     public void print() {
-        System.out.println("\n" + getName());
-        System.out.println("," + getDescription());
+        System.out.println("\n" + getName() + "," + getDescription());
         System.out.println("--------------------");
         Iterator<MenuComponent> iterator = list.iterator();
         while (iterator.hasNext()) {

@@ -1,5 +1,7 @@
 package com.example.compose;
 
+import java.util.Iterator;
+
 /**
  * @Description: 组件的抽象类，菜单组件的角色是为叶节点和组合节点提供一个公共的接口。
  * @author: cuixiuyin
@@ -47,6 +49,15 @@ public class MenuComponent {
 
     public void print() {
         throw new UnsupportedOperationException();
+    }
+
+    /***
+     * @Description 组合迭代器，遍历整个树结构
+     * @author cuixiuyin
+     * @date 2018/12/29 21:25
+     */
+    public Iterator<MenuComponent> createIterator() {
+        return new NullIterator();
     }
 
 

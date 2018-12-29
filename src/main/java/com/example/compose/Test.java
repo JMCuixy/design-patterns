@@ -39,6 +39,9 @@ public class Test {
         // 5、把最顶层的组合给服务员，以便可以获取到所有订单
         Waitress waitress = new Waitress(top);
         waitress.printMenu();
+
+        // 6、打印出所有素食项
+        waitress.printVegetarianMenu();
     }
 
 }

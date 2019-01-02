@@ -96,7 +96,7 @@ public static void main(String[] args) {
     System.out.println("混合饮料+2份摩卡：" + beverage1.getDescription() + "," + beverage1.cost());
 }
 ```
-![avatar][base64str]  
+![avatar][base64str]    
 
 ### 5、java.io 中的装饰者模式
 ![avatar][base64strIO]  

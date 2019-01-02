@@ -7,7 +7,7 @@ import java.util.Iterator;
  * @author: cuixiuyin
  * @date: 2018/12/29 08:59
  */
-public class MenuComponent {
+public abstract class MenuComponent {
 
     /**
      * @Description 组合节点（菜单）的方法组织在一起
@@ -47,6 +47,11 @@ public class MenuComponent {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @Description 相关操作
+     * @author cuixiuyin
+     * @date 2019/01/02 09:04
+     */
     public void print() {
         throw new UnsupportedOperationException();
     }
@@ -59,6 +64,4 @@ public class MenuComponent {
     public Iterator<MenuComponent> createIterator() {
         return new NullIterator();
     }
-
-
 }

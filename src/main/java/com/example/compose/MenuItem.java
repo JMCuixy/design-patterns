@@ -50,7 +50,6 @@ public class MenuItem extends MenuComponent {
     public Double getPrice() {
         return price;
     }
-
     @Override
     public void print() {
         System.out.print(getName() + "--" + getDescription() + "," + getPrice() + ",");

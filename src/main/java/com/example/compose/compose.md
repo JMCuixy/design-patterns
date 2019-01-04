@@ -261,6 +261,49 @@ public class Test {
 ```
 ![avatar][base64str3]    
 
+### 5、组合迭代器  
+```
+/**
+ * @Description: 组合迭代器，遍历整个树结构
+ * @author: cuixiuyin
+ * @date: 2018/12/29 21:30
+ */
+public class CompositeIterator implements Iterator {
+    private Stack<Iterator> stack = new Stack();
+
+    public CompositeIterator(Iterator iterator) {
+        stack.push(iterator);
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (stack.empty()) {
+            return false;
+        }
+        Iterator peek = stack.peek();
+        if (peek.hasNext()) {
+            return true;
+        }
+        stack.pop();
+        return hasNext();
+    }
+
+    @Override
+    public MenuComponent next() {
+        if (hasNext()) {
+            Iterator peek = stack.peek();
+            MenuComponent component = (MenuComponent) peek.next();
+            if (component instanceof Menu) {
+                stack.push(component.createIterator());
+            }
+            return component;
+        }
+        return null;
+    }
+}
+```
+该组合迭代器，从选定的节点开始，往下遍历整个树形结构，选取符合条件的数据。亲测，该迭代器只适合做筛选的操作，不适合做整体的操作，因为会有重复的步骤。
+
 ## 三、总结
 
 - 迭代器模式：提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。  

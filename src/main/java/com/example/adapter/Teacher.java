@@ -1,4 +1,4 @@
-package com.example.Adapter;
+package com.example.adapter;
 
 import lombok.Data;
 

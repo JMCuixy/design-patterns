@@ -1,4 +1,4 @@
-package com.example.Adapter.adapter;
+package com.example.adapter.adapter;
 
 import java.util.Enumeration;
 import java.util.Iterator;

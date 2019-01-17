@@ -23,38 +23,18 @@ public class Order {
         state = endState;
     }
 
-    /***
-     * @Description 乘客下单，订单创建
-     * @author cuixiuyin
-     * @date 2019/01/16 08:59
-     */
     void orderCreate() {
         state.orderCreate();
     }
 
-    /***
-     * @Description 乘客取消，订单取消
-     * @author cuixiuyin
-     * @date 2019/01/16 08:59
-     */
     void orderCancel() {
         state.orderCancel();
     }
 
-    /***
-     * @Description 司机接单，订单匹配
-     * @author cuixiuyin
-     * @date 2019/01/16 08:59
-     */
     void orderMatch() {
         state.orderMatch();
     }
 
-    /***
-     * @Description 乘客评价，订单结束
-     * @author cuixiuyin
-     * @date 2019/01/16 08:59
-     */
     void evaluation() {
         state.evaluation();
     }

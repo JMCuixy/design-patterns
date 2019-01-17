@@ -11,8 +11,265 @@
 ## 二、Demo 实现  
 &emsp;我们以一个网约车订单场景来做一个简单的 Demo 示例。订单分为四个状态 —— New（新建）、Running（进行中）、Cancel（取消）、End（结束）。当乘客下单时，订单状态进入 New 状态。这时，如果有司机接单，订单状态进入 Running 状态；如果无司机接单，乘客取消订单，订单进入 Cancel 状态。最后，乘客评价，Running 状态的订单进入 End 状态。
 ![](https://img2018.cnblogs.com/blog/1153954/201901/1153954-20190116084835767-1105088551.png)
+### 1、抽象状态类  
+```
+ * @Description: 抽象状态
+ * @author: cuixiuyin
+ * @date: 2019/01/16 08:57
+ */
+public interface State {
+    /***
+     * @Description 乘客下单，订单创建
+     * @author cuixiuyin
+     * @date 2019/01/16 08:59
+     */
+    void orderCreate();
+
+    /***
+     * @Description 乘客取消，订单取消
+     * @author cuixiuyin
+     * @date 2019/01/16 08:59
+     */
+    void orderCancel();
+
+    /***
+     * @Description 司机接单，订单匹配
+     * @author cuixiuyin
+     * @date 2019/01/16 08:59
+     */
+    void orderMatch();
+
+    /***
+     * @Description 乘客评价，订单结束
+     * @author cuixiuyin
+     * @date 2019/01/16 08:59
+     */
+    void evaluation();
+}
+```
+这里，我们定义了一个抽象状态类，封装了与 Context 的状态有关的行为 —— 乘客下单、乘客取消、司机接单、乘客评价。  
+### 2、具体状态类 
+- New 状态：     
+```
+public class NewState implements State {
+
+    private Order order;
+
+    public NewState(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public void orderCreate() {
+        System.out.println("您有一个订单等待司机接单，不可新建订单");
+    }
+
+    @Override
+    public void orderCancel() {
+        System.out.println("乘客取消订单，订单取消中...");
+        // 改变状态 New -> Cancel
+        order.setState(order.getCancelState());
+    }
+
+    @Override
+    public void orderMatch() {
+        System.out.println("司机接单中...");
+        // 改变状态 New -> Running
+        order.setState(order.getRunningState());
+    }
+
+    @Override
+    public void evaluation() {
+        System.out.println("新创建订单，不可评价");
+    }
+}
+```
+- Cancel 状态：
+```
+public class CancelState implements State {
+
+    private Order order;
+
+    public CancelState(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public void orderCreate() {
+        System.out.println("乘客下单，订单新建中...");
+        // 改变状态(取消后可以开始新一轮叫单) Cancel -> New
+        order.setState(order.getNewState());
+    }
+
+    @Override
+    public void orderCancel() {
+        System.out.println("订单已被取消，无可取消订单...");
+    }
+
+    @Override
+    public void orderMatch() {
+        System.out.println("无法接单，该订单已被乘客取消...");
+    }
+
+    @Override
+    public void evaluation() {
+        System.out.println("已取消订单不可评价...");
+    }
+}
+```
+- Running 状态： 
+```
+public class RunningState implements State {
+
+    private Order order;
+
+    public RunningState(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public void orderCreate() {
+        System.out.println("您有订单在进行中，不可新建订单...");
+    }
+
+    @Override
+    public void orderCancel() {
+        System.out.println("正在行程中的订单，无法取消");
+    }
+
+    @Override
+    public void orderMatch() {
+        System.out.println("您有订单在进行中，不可接其他单");
+    }
+
+    @Override
+    public void evaluation() {
+        System.out.println("乘客评价订单，订单结束...");
+        // 改变状态 Running -> End
+        order.setState(order.getEndState());
+    }
+}
+```
+- End 状态： 
+```
+public class EndState implements State {
+
+    private Order order;
+
+    public EndState(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public void orderCreate() {
+        System.out.println("乘客下单，订单新建中...");
+        // 改变状态(订单结束后可以开始新一轮叫单) End -> New
+        order.setState(order.getNewState());
+    }
+
+    @Override
+    public void orderCancel() {
+        System.out.println("无可取消订单");
+    }
+
+    @Override
+    public void orderMatch() {
+        System.out.println("无可匹配订单");
+    }
+
+    @Override
+    public void evaluation() {
+        System.out.println("无可评价订单");
+    }
+}
+```
+这里，我们定义了四个具体状态类（New、Cancel、Running、End），每个状态类都持有 Context 的引用，状态之间的切换由 Context 实例来进行。  
+### 3、Context 上下文  
+```
+public class Order {
+
+    private State newState;
+    private State cancelState;
+    private State runningState;
+    private State endState;
+
+    // 默认订单已结束，可开始新一轮叫单
+    private State state;
+
+    public Order() {
+        newState = new NewState(this);
+        cancelState = new CancelState(this);
+        runningState = new RunningState(this);
+        endState = new EndState(this);
+        state = endState;
+    }
+    
+    void orderCreate() {
+        state.orderCreate();
+    }
+    
+    void orderCancel() {
+        state.orderCancel();
+    }
+    
+    void orderMatch() {
+        state.orderMatch();
+    }
+    
+    void evaluation() {
+        state.evaluation();
+    }
 
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
+
+    public State getNewState() {
+        return newState;
+    }
+
+    public State getCancelState() {
+        return cancelState;
+    }
+
+    public State getRunningState() {
+        return runningState;
+    }
+
+    public State getEndState() {
+        return endState;
+    }
+}
+```
+这里，我们定义了Context，Context 持有所有需要转换的状态实例，并把每一个行为动作都委托给状态来进行。  
+### 4、测试    
+```
+public class Test {
+
+    public static void main(String[] args) {
+        Order order = new Order();
+        //1、新建订单
+        order.orderCreate();
+        //2、取消订单
+        order.orderCancel();
+        //3、新建订单
+        order.orderCreate();
+        //4、司机接单
+        order.orderMatch();
+        //5、尝试取消订单
+        order.orderCancel();
+        //6、乘客评价
+        order.evaluation();
+    }
+}
+```
+![](https://img2018.cnblogs.com/blog/1153954/201901/1153954-20190117090902305-1429381712.png)
+
+![](https://img2018.cnblogs.com/blog/1153954/201901/1153954-20190117085908784-1143782854.png)
+
+演示源代码：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/state)    
 
 
 ## 三、总结  

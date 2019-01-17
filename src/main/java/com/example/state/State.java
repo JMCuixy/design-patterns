@@ -6,7 +6,6 @@ package com.example.state;
  * @date: 2019/01/16 08:57
  */
 public interface State {
-
     /***
      * @Description 乘客下单，订单创建
      * @author cuixiuyin
@@ -34,5 +33,4 @@ public interface State {
      * @date 2019/01/16 08:59
      */
     void evaluation();
-
 }

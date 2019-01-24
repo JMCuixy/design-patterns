@@ -1,4 +1,4 @@
-package com.example.factory.method;
+package com.example.factory_method.absc;
 
 
 /**

@@ -21,6 +21,8 @@ public class Test {
         Goods customer = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
                 goods.getClass().getInterfaces(),
                 new CustomerInvocationHandler(goods));
+        // 判断某个类是不是代理类
+        System.out.println(Proxy.isProxyClass(customer.getClass()));
         // 卖家代理
         Goods seller = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
                 goods.getClass().getInterfaces(),

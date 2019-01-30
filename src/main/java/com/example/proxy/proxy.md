@@ -13,6 +13,84 @@
 ### 2、虚拟代理    
 &emsp;虚拟代理作为创建开销大的对象的代表。虚拟代理经常直到我们真正需要一个对象的时候才创建它。当对象在创建前和创建中的时，由虚拟代理来扮演对象的替身。对象创建后，代理就会将请求直接委托给对象。  
 
+&emsp;我们来看一个简单Demo，对于虚拟代理和普通代理的区别就一目了然了~~   
+#### Subject.java  
+```
+/**
+ * @Description: 主题接口
+ */
+public interface Subject {
+
+    void request();
+}
+```
+#### RealSubject.java  
+```
+/**
+ * @Description:具体主题 — 真正做事的地方
+ */
+public class RealSubject implements Subject {
+
+    @Override
+    public void request() {
+        System.out.println("this is real subject.");
+    }
+}
+```
+#### Proxy.java - 普通代理
+```
+/**
+ * @Description: 普通代理
+ */
+public class Proxy implements Subject {
+
+    private Subject subject;
+
+    public Proxy(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public void request() {
+        subject.request();
+    }
+}
+```
+#### VirtualProxy.java - 虚拟代理
+```
+/**
+ * @Description: 虚拟代理
+ */
+public class VirtualProxy implements Subject {
+
+    private Subject subject;
+
+    @Override
+    public void request() {
+        // 在真正使用的时候才创建对象
+        if (subject == null) {
+            subject = new RealSubject();
+        }
+        subject.request();
+    }
+}
+```
+#### 测试  
+```
+public class Test {
+
+    public static void main(String[] args) {
+        //1、普通代理
+        Subject subject = new RealSubject();
+        Proxy proxy = new Proxy(subject);
+        proxy.request();
+
+        //2、虚拟代理
+        Subject virtualProxy = new VirtualProxy();
+        virtualProxy.request();
+    }
+}
+```
 
 ### 3、保护代理    
 &emsp;Java 在java.lang.reflect包中有自己的代理支持，利用这个包你可以在运行时动态的创建一个代理类，并将方法的调用转发到你说指定的类。因为实际的代理类是在运行时创建的，我们称这个Java技术为：动态代理。  
@@ -139,5 +217,9 @@ public class Test {
 &emsp;2、代理对象可以在客户端和目标对象之间起到中介的作用，这样起到了保护目标对象的作用。  
 - 缺点：  
 &emsp;1、由于在客户端和真实对象之间增加了代理对象，请求的链路变长，可能会导致请求速度变慢。  
+ 
+**演示源代码：**[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/proxy)  
+**<font color="red">tips</font>**：transient 关键字，告诉 jvm 不要序列化这个字段。 
 
-**<font color="red">tips</font>**：transient 关键字，告诉 jvm 不要序列化这个字段。
+## 四、寄语
+&emsp;年前的最后一篇文章了，祝愿大家新年快乐。愿大家早日实现财务自由！愿大家此生想得到的都拥有，得不到的都释怀！

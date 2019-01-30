@@ -4,9 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * @Description:
- * @author: cuixiuyin
- * @date: 2019/01/24 20:43
+ * @Description: 顾客 InvocationHandler
  */
 public class CustomerInvocationHandler implements InvocationHandler {
 
@@ -15,7 +13,6 @@ public class CustomerInvocationHandler implements InvocationHandler {
     public CustomerInvocationHandler(Goods goods) {
         this.goods = goods;
     }
-
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {

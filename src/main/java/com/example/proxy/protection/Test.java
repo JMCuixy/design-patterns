@@ -9,7 +9,6 @@ import java.lang.reflect.Proxy;
  */
 public class Test {
 
-
     /**
      * 1、Java 在 java.lang.reflect 包中有自己的代理支持，利用这个包你可以在运行时动态的创建一个代理类，实现一个或多个接口，并将
      * 方法的调用转发到你所指定的类。因为实际的代理类是在运行时创建的，我们称这个Java技术为：动态代理。
@@ -17,16 +16,16 @@ public class Test {
      */
     public static void main(String[] args) {
         Goods goods = new Clothes();
-        // 顾客代理
+        // 创建顾客代理
         Goods customer = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
                 goods.getClass().getInterfaces(),
                 new CustomerInvocationHandler(goods));
-        // 判断某个类是不是代理类
-        System.out.println(Proxy.isProxyClass(customer.getClass()));
-        // 卖家代理
+        // 创建卖家代理
         Goods seller = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
                 goods.getClass().getInterfaces(),
                 new SellerInvocationHandler(goods));
+        // 判断某个类是不是代理类
+        System.out.println(Proxy.isProxyClass(customer.getClass()));
 
         // 卖家代理调用
         System.out.println("-------卖家代理调用开始--------");
@@ -43,6 +42,5 @@ public class Test {
         System.out.println(customer.getPrice(800001L).doubleValue());
         System.out.println(customer.getProfit(800001L).doubleValue());
         System.out.println("-------顾客代理调用结束--------");
-
     }
 }

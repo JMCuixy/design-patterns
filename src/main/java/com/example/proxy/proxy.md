@@ -7,16 +7,121 @@
 ![](https://img2018.cnblogs.com/blog/1153954/201901/1153954-20190126212111349-1347202242.jpg)
 
 ## 二、代理模式的几种变体  
-### 1、远程代理  
+### 1、远程代理   
+&emsp;之前在看《Spring 实战》的时候，接触到了[<font color="blue">RPC机制</font>](https://www.cnblogs.com/jmcui/p/9044212.html)。现在在读设计模式的时候，才发现 RPC 在设计模式中还有另外一个名字 —— 远程代理。所以这里就不展开讲了，详细了解可参考之前的文章。  
 
-&emsp;之前在看《Spring 实战》的时候，接触了[RPC机制](https://www.cnblogs.com/jmcui/p/9044212.html)。现在在读设计模式的时候，才发现 RPC 在设计模式中还有另外一个名字 —— 远程代理。这里就不展开讲了，详细了解，可参考之前的文章。  
-
-### 2、虚拟代理  
-
-### 3、保护代理  
+### 2、虚拟代理    
+&emsp;虚拟代理作为创建开销大的对象的代表。虚拟代理经常直到我们真正需要一个对象的时候才创建它。当对象在创建前和创建中的时，由虚拟代理来扮演对象的替身。对象创建后，代理就会将请求直接委托给对象。  
 
 
+### 3、保护代理    
+&emsp;Java 在java.lang.reflect包中有自己的代理支持，利用这个包你可以在运行时动态的创建一个代理类，并将方法的调用转发到你说指定的类。因为实际的代理类是在运行时创建的，我们称这个Java技术为：动态代理。  
 
+&emsp;我们要利用 Java 的动态代理创建一个保护代理实现。所谓保护代理，有点像权限控制系统，代理会拦截所有的请求并判断该次请求是否有权限访问对应的资源。  
+
+![](https://img2018.cnblogs.com/blog/1153954/201901/1153954-20190130093636175-1635059208.jpg)  
+
+现在我们用保护代理简单的做一个权限控制，具体表现为：顾客可以查看商品的名字、详情、价格，而卖家可以看到商品的所有信息，包括利润等。  
+#### 商品 — Goods.java    
+```
+public interface Goods {
+    
+    /**
+     * @Description 商品的名字、详情、价格 —— 顾客可以查看
+     */
+    String getName(Long id);
+
+    String getDetail(Long id);
+
+    BigDecimal getPrice(Long id);
+
+    /**
+     * @Description 商品的利润 —— 只有卖家可以看到
+     */
+    BigDecimal getProfit(Long id);
+}
+```
+#### InvocationHandler    
+&emsp;InvocationHandler 的工作是响应代理的任何调用。你可以把 InvocationHandler 想成是代理收到方法调用后，请求做实际工作的对象。就是在 InvocationHandler 中，我们对请求进行筛选，判断是否有权限访问相应的资源。  
+```
+/**
+ * @Description: 顾客InvocationHandler — 看不到商品利润信息
+ */
+public class CustomerInvocationHandler implements InvocationHandler {
+
+    private Goods goods;
+
+    public CustomerInvocationHandler(Goods goods) {
+        this.goods = goods;
+    }
+    
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if ("getName".equals(method.getName())
+                || "getDetail".equals(method.getName())
+                || "getPrice".equals(method.getName())) {
+            return method.invoke(goods, args);
+        }
+        if ("getProfit".equals(method.getName())) {
+            throw new IllegalAccessException();
+        }
+        return null;
+    }
+}
+```
+```
+/**
+ * @Description: 商家InvocationHandler — 可以看到所有信息
+ */
+public class SellerInvocationHandler implements InvocationHandler {
+
+    private Goods goods;
+
+    public SellerInvocationHandler(Goods goods) {
+        this.goods = goods;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        return method.invoke(goods, args);
+    }
+}
+```
+#### 测试
+```
+public class Test {
+    
+    public static void main(String[] args) {
+        Goods goods = new Clothes();
+        // 创建顾客代理
+        Goods customer = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
+                goods.getClass().getInterfaces(),
+                new CustomerInvocationHandler(goods));
+        // 创建卖家代理
+        Goods seller = (Goods) Proxy.newProxyInstance(goods.getClass().getClassLoader(),
+                goods.getClass().getInterfaces(),
+                new SellerInvocationHandler(goods));
+        // 判断某个类是不是代理类
+        System.out.println(Proxy.isProxyClass(customer.getClass()));
+        
+        // 卖家代理调用
+        System.out.println("-------卖家代理调用开始--------");
+        System.out.println(seller.getName(800001L));
+        System.out.println(seller.getDetail(800001L));
+        System.out.println(seller.getPrice(800001L).doubleValue());
+        System.out.println(seller.getProfit(800001L).doubleValue());
+        System.out.println("-------卖家代理调用结束--------");
+
+        // 顾客代理调用
+        System.out.println("-------顾客代理调用开始--------");
+        System.out.println(customer.getName(800001L));
+        System.out.println(customer.getDetail(800001L));
+        System.out.println(customer.getPrice(800001L).doubleValue());
+        System.out.println(customer.getProfit(800001L).doubleValue());
+        System.out.println("-------顾客代理调用结束--------");
+    }
+}
+```
 
 ## 三、总结  
 - 在真实的世界中，代理模式有许多变体，这些变体都有共通点：都会将客户对主题（Subject）施加的方法调用拦截下来。这种间接的级别让我们可以做很多事，包括将请求分发到远程主题 — 远程代理；给创建开销大的对象提供代表 — 虚拟代理；或者提供某些级别的保护 — 保护代理。

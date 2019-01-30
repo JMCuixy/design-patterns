@@ -4,9 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
- * @Description:
- * @author: cuixiuyin
- * @date: 2019/01/24 20:49
+ * @Description: 商家 — 可以看到所有资源
  */
 public class SellerInvocationHandler implements InvocationHandler {
 

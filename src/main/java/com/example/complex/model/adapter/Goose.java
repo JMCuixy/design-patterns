@@ -1,4 +1,4 @@
-package com.example.complex;
+package com.example.complex.model.adapter;
 
 /**
  * @Description: 鹅

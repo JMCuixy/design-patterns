@@ -1,4 +1,6 @@
-package com.example.complex;
+package com.example.complex.model.decorator;
+
+import com.example.complex.model.Quackable;
 
 /**
  * @Description: 装饰者模式 —— 统计鸭子 quack 的次数

@@ -1,4 +1,6 @@
-package com.example.complex;
+package com.example.complex.model.adapter;
+
+import com.example.complex.model.Quackable;
 
 /**
  * @Description: 鸭子—鹅 适配器

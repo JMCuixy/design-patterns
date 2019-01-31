@@ -1,4 +1,6 @@
-package com.example.complex;
+package com.example.complex.factory;
+
+import com.example.complex.model.Quackable;
 
 /**
  * @Description:
@@ -8,6 +10,10 @@ package com.example.complex;
 public abstract class AbstractDuckFactory {
 
     public abstract Quackable createMallardDuck();
+
     public abstract Quackable createDuckCall();
+
     public abstract Quackable createRubberDuck();
+
+    public abstract Quackable createGooseDuck();
 }

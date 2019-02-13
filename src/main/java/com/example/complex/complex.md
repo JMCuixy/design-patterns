@@ -1,5 +1,23 @@
 ## 一、剩下的模式
 
+### 1、桥接模式（Bridge Pattern）
+- 概念：不只改变你的实现，也改变你的抽象。桥接模式的主要特点是把抽象(Abstraction)与行为实现(Implementation)分离开来，从而可以保持各部分的独立性以及应对他们的功能扩展。  
+- 角色：  
+&emsp;1. 实现类接口（Implementor）：定义行为实现接口。  
+&emsp;2. 具体实现类（ConcreteImplementor）：实现 Implementor 接口，提供不同的行为实现。  
+&emsp;3. 桥接抽象类（Abstraction）：用于定义抽象类的接口，它一般是抽象类而不是接口，其中定义了一个Implementor（实现类接口）类型的对象并可以维护该对象，它与Implementor之间具有关联关系，它既可以包含抽象业务方法，也可以包含具体业务方法。   
+&emsp;4. 扩充抽象类（RefinedAbstraction）：扩充由Abstraction定义的接口，通常情况下它不再是抽象类而是具体类，它实现了在Abstraction中声明的抽象业务方法，在RefinedAbstraction中可以调用在Implementor中定义的业务方法。  
+- UML图：  
+![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190213175715135-119471929.png)
+- 优点：将抽象与行为实现解耦，二者可以独立扩展，不会影响到对方。  
+- 适用场景：当需要使用不同的方式改变接口和实现时。  
+
+### 2、建造者模式（Builder Pattern）
+- 概念：封装一个产品的构造过程，并允许按步骤构造。建造者模式可以将一个产品的内部表象与产品的生成过程分割开来，从而使一个建造过程生成具有不同的内部表象的产品对象。  
+- 角色：  
+&emsp;1. 建造者（Builder）：给出一个抽象接口，以规范产品对象的各个组成成分的建造。  
+&emsp;2. 具体建造者（Concrete Builder）：实现 Builder 角色提供的接口，一步一步完成创建产品实例的过程；在建造过程完成后，提供产品的实例。
+
 ## 二、其他
 
 ### 1、复合模式
@@ -31,8 +49,4 @@
 - 反模式的工作内容包括：警告你不要陷入某种致命的诱惑；为何这个解决方案从长远看会造成不同的影响；建议改用其他的模式以提供更好的解决方案。  
 
 
-演示源代码：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns)   
-
-
-
-
+演示源代码：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns)

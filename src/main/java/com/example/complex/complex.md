@@ -36,13 +36,13 @@
 ### 3、责任链模式（Chain of Responsibility Pattern）  
 
 - 概念：让一个以上的对象有机会能够处理某个请求。责任链模式为请求创建了一条接收者对象的链，每个接收者都包含对另一个接收者的引用，当某个接受者不能处理该请求时，会将该请求转给下一个接受者处理。  
-- 角色：
-&emsp;1. 抽象请求处理者（Handler）：是所有具体请求处理者的父类。
+- 角色：  
+&emsp;1. 抽象请求处理者（Handler）：是所有具体请求处理者的父类。  
 &emsp;2. 具体请求处理者（Concrete Handler）：实现抽象请求处理者，包含下一个具体请求处理者的引用。
 - UML图：  
 ![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190214182534489-595586103.png)
 
-- 优点：
+- 优点：  
 &emsp;1. 弱化了发出请求的人和处理请求的人之间的关系。发出请求的人只需要向第一个具体的处理者发送请求，然后就可以不用管了，处理者会在责任链上自己寻找处理的方法。  
 &emsp;2. 通过改变链内的成员或调动他们的次序，允许你动态地新增或删除责任。   
 - 缺点：请求需要在责任链上传播责任，直至找到合适的处理对象。这样虽然提高了程序的灵活性，但同时也出现了处理的延迟。  
@@ -50,7 +50,12 @@
 
 **<font color="red">tips</font>**：Struts 的拦截器，Servlet 的过滤器，Netty 的 ChannelPipeline 都是责任链模式~  
 
+### 4、蝇量模式（Flyweight Pattern）
 
+- 概念：
+- 角色：
+- UML：
+- 优点：
 
 演示源代码：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns)
 

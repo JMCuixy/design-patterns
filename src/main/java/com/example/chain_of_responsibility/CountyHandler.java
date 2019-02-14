@@ -2,7 +2,7 @@ package com.example.chain_of_responsibility;
 
 /**
  * @author xiuyin.cui
- * @Description
+ * @Description 具体请求处理者：城市处理者
  * @date 2019/2/14 17:00
  */
 public class CountyHandler extends Handler {

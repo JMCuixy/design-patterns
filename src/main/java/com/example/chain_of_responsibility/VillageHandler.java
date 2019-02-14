@@ -2,7 +2,7 @@ package com.example.chain_of_responsibility;
 
 /**
  * @author xiuyin.cui
- * @Description 具体请求处理者：包含下一个具体请求处理者的引用
+ * @Description 具体请求处理者：村庄处理者
  * @date 2019/2/14 16:55
  */
 public class VillageHandler extends Handler {

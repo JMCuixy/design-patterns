@@ -5,7 +5,7 @@ package com.example.bridge;
  * @author: cuixiuyin
  * @date: 2019/02/14 09:54
  */
-public class BridgeTest {
+public class Test {
 
     public static void main(String[] args) {
         Implementor implementorA = new ConcreateImplementorA();

@@ -1,4 +1,4 @@
-package com.example.Interpreter;
+package com.example.interpreter;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.example.Interpreter;
+package com.example.interpreter;
 
 /**
  * @author xiuyin.cui

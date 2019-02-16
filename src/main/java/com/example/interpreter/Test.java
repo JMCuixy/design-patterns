@@ -17,7 +17,7 @@ public class Test {
         IExpression left = new Variable("x");
         IExpression right = new Constant(5);
         IExpression plus = new Plus(left, right);
-        System.out.println(plus.toString() + " = " + plus.interpreter(ctx));
+        System.out.println(plus.toString() + " = " + plus.interpret(ctx));
 
     }
 }

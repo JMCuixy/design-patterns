@@ -13,6 +13,8 @@
 
 - 优点：将抽象与行为实现解耦，二者可以独立扩展，不会影响到对方。  
 - 适用场景：当需要使用不同的方式改变接口和实现时。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/bridge</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/bridge)  
+
 
 ### 2、建造者模式（Builder Pattern）
 
@@ -32,6 +34,7 @@
 - 建造者模式和模板方法模式的比较区别？  
 &emsp;1. 建造者是使用组合方式实现不同的表示，而模板方法使用的是继承的方式。  
 &emsp;2. 建造者抽象的是构建过程，而模板方法提取的是实现公共。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/builder</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/builder)  
 
 ### 3、责任链模式（Chain of Responsibility Pattern）  
 
@@ -47,6 +50,7 @@
 &emsp;2. 通过改变链内的成员或调动他们的次序，允许你动态地新增或删除责任。   
 - 缺点：请求需要在责任链上传播责任，直至找到合适的处理对象。这样虽然提高了程序的灵活性，但同时也出现了处理的延迟。  
 - 应用场景：在视窗系统中，经常会使用到责任链模式，尤其是事件的处理，熟悉 javaScript 开发的朋友，可能会知道，浏览器中的事件有冒泡机制，就是事件的是向父控件传播的，如果自己处理不了，就会传播给父控件去处理。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/chain_of_responsibility</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/chain_of_responsibility)   
 
 **<font color="red">tips</font>**：Struts 的拦截器，Servlet 的过滤器，Netty 的 ChannelPipeline 都是责任链模式~  
 
@@ -65,16 +69,17 @@
 &emsp;1. 减少运行时对象实例的个数，节省内存。   
 &emsp;2. 将许多“虚拟”对象（可共享内部状态的具体蝇量）的状态集中管理。    
 - 缺点：单个的逻辑实例将无法拥有独立而不同的行为。  
-- 应用场景：当一个类有许多的实例，而这些实例能被同一方法控制的时候。   
+- 应用场景：当一个类有许多的实例，而这些实例能被同一方法控制的时候。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/flyweight</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/flyweight)  
 
 ### 5、解释器模式（Interpreter Pattern）  
 
 - 概念：给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。  
 - 角色：  
-&emsp;1. Expression：抽象表达式，声明一个所有的具体表达式都需要实现的抽象接口；这个接口主要是一个interpret()方法，称做解释操作。  
-&emsp;2. Terminal Expression：终结符表达式，实现了抽象表达式所要求的接口；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如公式R=R1+R2，R1和R2就是终结符，对应的解析R1和R2的解释器就是终结符表达式。  
-&emsp;3. Nonterminal Expression：非终结符表达式，文法中的每一条规则都需要一个具体的非终结符表达式，非终结符表达式一般是文法中的运算符或者其他关键字，比如公式R=R1+R2中，“+"就是非终结符，解析“+”的解释器就是一个非终结符表达式。  
-&emsp;4. Context：上下文，它的任务一般是用来存放文法中各个终结符所对应的具体值，比如R=R1+R2，给R1赋值100，给R2赋值200，这些信息需要存放到环境中。  
+&emsp;1. 抽象表达式（Expression）：声明一个所有的具体表达式都需要实现的抽象接口；这个接口主要是一个interpret()方法，称做解释操作。  
+&emsp;2. 终结符表达式（Terminal Expression）：终结符表达式，实现了抽象表达式所要求的接口；文法中的每一个终结符都有一个具体终结表达式与之相对应。比如公式 R = R1 + R2，R1 和 R2 就是终结符，对应的解析 R1 和 R2 的解释器就是终结符表达式。  
+&emsp;3. 非终结符表达式（Nonterminal Expression）：文法中的每一条规则都需要一个具体的非终结符表达式，非终结符表达式一般是文法中的运算符或者其他关键字，比如公式 R = R1 + R2 中，“+"就是非终结符，解析“+”的解释器就是一个非终结符表达式。  
+&emsp;4. 上下文（Context）：它的任务一般是用来存放文法中各个终结符所对应的具体值，比如 R = R1 + R2，给 R1 赋值100，给 R2 赋值200，这些信息需要存放到上下文中。  
 - UML：  
 ![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190216094055874-1034934455.png)
 
@@ -85,7 +90,7 @@
 - 应用场景：  
 &emsp;1. 解释器模式在平常使用的较少，可以用来处理脚本语言和编程语言。  
 &emsp;2. 当你需要实现一个简单的语言时，或者简单比效率更重要时，使用解释器模式。  
-- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns</font>](https://github.com/JMCuixy/design-patterns)
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/interpreter</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/interpreter)
 
 
 ## 二、其他  

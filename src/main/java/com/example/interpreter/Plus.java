@@ -15,8 +15,8 @@ public class Plus implements IExpression {
     }
 
     @Override
-    public Integer interpreter(Context ctx) {
-        return left.interpreter(ctx) + right.interpreter(ctx);
+    public Integer interpret(Context ctx) {
+        return left.interpret(ctx) + right.interpret(ctx);
     }
 
     @Override

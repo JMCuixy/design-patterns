@@ -10,6 +10,6 @@ public interface IExpression {
     /**
      * 解释操作
      */
-    Integer interpreter(Context ctx);
+    Integer interpret(Context ctx);
 
 }

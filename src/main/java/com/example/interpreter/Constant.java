@@ -14,7 +14,7 @@ public class Constant implements IExpression {
     }
 
     @Override
-    public Integer interpreter(Context ctx) {
+    public Integer interpret(Context ctx) {
         return value;
     }
 

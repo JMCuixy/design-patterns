@@ -92,6 +92,26 @@
 &emsp;2. 当你需要实现一个简单的语言时，或者简单比效率更重要时，使用解释器模式。  
 - Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/interpreter</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/interpreter)
 
+### 6、中介者模式（Mediator Pattern）  
+
+- 概念：来集中相关对象之间复杂的沟通和控制方式。中介者模式定义了一个中介对象来封装一系列对象之间的交互关系。中介者使各个对象之间不需要显式地相互引用，从而使耦合性降低，而且可以独立地改变它们之间的交互行为。   
+- 角色：  
+&emsp; 1. 抽象中介者（Mediator）角色：它是中介者的接口，提供了同事对象注册与转发同事对象信息的抽象方法。
+&emsp; 2. 具体中介者（ConcreteMediator）角色：实现中介者接口，定义一个 List 来管理同事对象，协调各个同事角色之间的交互关系，因此它依赖于同事角色。
+&emsp; 3. 抽象同事类（Colleague）角色：定义同事类的接口，保存中介者对象，提供同事对象交互的抽象方法，实现所有相互影响的同事类的公共功能。
+&emsp; 4. 具体同事类（Concrete Colleague）角色：是抽象同事类的实现者，当需要与其他同事对象交互时，由中介者对象负责后续的交互。
+- UML：
+![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190218093713202-26832515.png)  
+
+- 优点： 
+&emsp;1. 通过将对象彼此解耦，可以增加对象的复用性。  
+&emsp;2. 通过将控制逻辑集中，可以简化系统维护。  
+&emsp;3. 将对象间的一对多关联转变为一对一的关联，可以让对象之间所传递的消息变得简单而且大幅减少。  
+- 缺点：如果设计不当，中介者对象本身会变得过于复杂。  
+- 应用场景：    
+&emsp;1. 中介者模式常常被用来协调相关的 GUI 组件。   
+&emsp;2. 当一组对象要进行沟通或者业务上的交互，但是其关系却又很复杂混乱时。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/mediator</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/mediator)  
 
 ## 二、其他  
 

@@ -113,6 +113,28 @@
 &emsp;2. 当一组对象要进行沟通或者业务上的交互，但是其关系却又很复杂混乱时。  
 - Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/mediator</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/mediator)  
 
+### 7、备忘录模式（Memento Pattern）
+
+- 概念：在不破坏封闭的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。备忘录模式的目标包括：储存系统关键对象的重要状态；维护关键对象的封装。  
+- 角色：
+&emsp;1. 备忘录（Memento）角色：备忘录角色存储“备忘发起角色”的内部状态。“备忘发起角色”根据需要决定备忘录角色存储“备忘发起角色”的哪些内部状态。为了防止“备忘发起角色”以外的其他对象访问备忘录。备忘录实际上有两个接口，“备忘录管理者角色”只能看到备忘录提供的窄接口——对于备忘录角色中存放的属性是不可见的。“备忘发起角色”则能够看到一个宽接口——能够得到自己放入备忘录角色中属性。  
+&emsp;2. 备忘发起（Originator）角色：“备忘发起角色”创建一个备忘录，用以记录当前时刻它的内部状态。在需要时使用备忘录恢复内部状态。  
+&emsp;3. 备忘录管理者（Caretaker）角色：负责保存好备忘录。不能对备忘录的内容进行操作或检查。  
+- UML：
+![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190219103146337-1500717776.png)
+
+- 优点：
+&emsp;1. 将被存储的状态放在外面，不要和关键对象混在一起，这可以帮助维护内聚。  
+&emsp;2. 保持关键对象的数据封装。  
+&emsp;3. 提供了容易实现的恢复能力。  
+- 缺点和应用场景：
+&emsp;1. 备忘录用于存储状态。  
+&emsp;2. 储存和恢复状态的过程可能相当耗时。  
+&emsp;3. 在 Java 系统中，其实可以考虑使用序列化机制储存系统的状态。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/memento</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/memento)  
+
+
+
 ## 二、其他  
 
 ### 1、复合模式

@@ -167,7 +167,6 @@
 - Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor)  
 
 
-
 ## 二、其他  
 
 ### 1、复合模式

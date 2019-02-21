@@ -1,4 +1,4 @@
-package com.example.protoType;
+package com.example.prototype;
 
 /**
  * @author xiuyin.cui
@@ -19,14 +19,9 @@ public class Student implements Cloneable {
         this.age = age;
     }
 
-    public Object clone() {
-        Student stu = null;
-        try {
-            stu = (Student) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return stu;
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override

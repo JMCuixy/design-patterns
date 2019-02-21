@@ -137,9 +137,11 @@
 
 - 概念：允许通过复制现有的实例来创建新的实例（在 Java 中，这通常意味着使用 clone() 方法，或者反序列化）。这个模式的重点在于，客户的代码在不知道要实例化何种特定类的情况下，可以制造出新的实例。  
 - 角色： 
-&emsp;1. 抽象原型类（Prototype）：声明克隆自身的接口。 
+&emsp;1. 抽象原型类（Prototype）：声明克隆自身的接口。在 java 中就是 Cloneable 接口。
 &emsp;2. 具体原型类（ConcretePrototype）：实现克隆的具体操作。  
-- UML：
+- UML：  
+![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190221092706787-654648229.png)  
+
 - 优点：  
 &emsp;1. 向客户隐藏制造新实例的复杂性。  
 &emsp;2. 提供让客户能够产生未知类型对象的选项。  
@@ -147,12 +149,24 @@
 - 用途和缺点：  
 &emsp;1. 在一个复杂的类层次中，当系统必须从其中的许多类型创建新对象时，可以考虑原型。  
 &emsp;2. 使用原型模式的缺点：对象的复制有时相当复杂（浅拷贝和深拷贝）。  
-- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/protoType</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/protoType)  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/prototype</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/prototype)  
 
 
 ### 9、访问者模式（Visitor Pattern）
 
-- 概念
+- 概念：为一个对象的组合增加新的能力，且封装并不重要时。  
+- 角色：
+- UML：
+- 优点：  
+&emsp;1. 允许你对组合结构加入新的操作，而无需改变结构本身。  
+&emsp;2. 想要加入新的操作，相对容易。  
+&emsp;3. 访问者所进行的操作，其代码是集中在一起的。
+- 缺点：
+&emsp;1. 当采用访问者模式的时候，就会打破组合类的封装。
+&emsp;2. 因为游走的功能牵涉其中，所以对组合结构的改变就更加困难。  
+- Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor)  
+
+
 
 ## 二、其他  
 

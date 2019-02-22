@@ -151,21 +151,27 @@
 &emsp;2. 使用原型模式的缺点：对象的复制有时相当复杂（浅拷贝和深拷贝）。  
 - Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/prototype</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/prototype)  
 
-
 ### 9、访问者模式（Visitor Pattern）
 
-- 概念：为一个对象的组合增加新的能力，且封装并不重要时。  
+- 概念：为一个对象的组合增加新的能力，且封装并不重要时。访问者模式将作用于某种数据结构中的各元素的操作分离出来封装成独立的类，使其在不改变数据结构的前提下可以添加作用于这些元素的新的操作，为数据结构中的每个元素提供多种访问方式。它将对数据的操作与数据结构进行分离，是行为类模式中最复杂的一种模式。  
 - 角色：
-- UML：
+&emsp;1. 抽象访问者（Visitor）角色：定义一个访问具体元素的接口，为每个具体元素类对应一个访问操作 visit() ，该操作中的参数类型标识了被访问的具体元素。
+&emsp;2. 具体访问者（ConcreteVisitor）角色：实现抽象访问者角色中声明的各个访问操作，确定访问者访问一个元素时该做什么。
+&emsp;3. 抽象元素（Element）角色：声明一个包含接受操作 accept() 的接口，被接受的访问者对象作为 accept() 方法的参数。
+&emsp;4. 具体元素（ConcreteElement）角色：实现抽象元素角色提供的 accept() 操作，其方法体通常都是 visitor.visit(this) ，另外具体元素中可能还包含本身业务逻辑的相关操作。
+&emsp;5. 对象结构（Object Structure）角色：是一个包含元素角色的容器，提供让访问者对象遍历容器中的所有元素的方法，通常由 List、Set、Map 等聚合类实现。
+- UML：  
+![](https://img2018.cnblogs.com/blog/1153954/201902/1153954-20190222093713087-1181610377.png)  
+
 - 优点：  
 &emsp;1. 允许你对组合结构加入新的操作，而无需改变结构本身。  
-&emsp;2. 想要加入新的操作，相对容易。  
+&emsp;2. 想要加入新的行为，相对容易。  
 &emsp;3. 访问者所进行的操作，其代码是集中在一起的。
 - 缺点：
 &emsp;1. 当采用访问者模式的时候，就会打破组合类的封装。
 &emsp;2. 因为游走的功能牵涉其中，所以对组合结构的改变就更加困难。  
+&emsp;3. 违反了依赖倒置原则。访问者模式依赖了具体类，而没有依赖抽象类。    
 - Demo 实现：[<font color=#0000ff>https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor</font>](https://github.com/JMCuixy/design-patterns/tree/master/src/main/java/com/example/visitor)  
-
 
 ## 二、其他  
 

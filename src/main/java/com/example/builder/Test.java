@@ -9,13 +9,7 @@ public class Test {
 
     public static void main(String[] args) {
         ConcreteBuilderA builderA = new ConcreteBuilderA();
-        builderA.buildFoundation();
-        builderA.buildWall();
-        builderA.buildRoof();
         ConcreteBuilderB builderB = new ConcreteBuilderB();
-        builderB.buildFoundation();
-        builderB.buildWall();
-        builderB.buildRoof();
         Director director = new Director();
         // 调用 A 构造者
         director.setBuilder(builderA);

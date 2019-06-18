@@ -13,6 +13,9 @@ public class ConcreteBuilderB implements Builder {
 
     public ConcreteBuilderB() {
         this.house = new House();
+        buildFoundation();
+        buildWall();
+        buildRoof();
     }
 
     @Override

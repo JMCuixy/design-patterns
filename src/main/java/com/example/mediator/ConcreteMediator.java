@@ -12,6 +12,7 @@ public class ConcreteMediator extends Mediator {
 
     private List<Colleague> colleagues = new ArrayList<Colleague>();
 
+    @Override
     public void register(Colleague colleague) {
         if (!colleagues.contains(colleague)) {
             colleagues.add(colleague);
@@ -19,6 +20,7 @@ public class ConcreteMediator extends Mediator {
         }
     }
 
+    @Override
     public void relay(Colleague colleague, String msg) {
         for (Colleague cl : colleagues) {
             if (!cl.equals(colleague)) {

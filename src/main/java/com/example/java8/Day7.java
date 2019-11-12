@@ -77,6 +77,6 @@ public class Day7 {
         str = dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         System.out.println(str);
         str = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+        System.out.println(str);
     }
 }
